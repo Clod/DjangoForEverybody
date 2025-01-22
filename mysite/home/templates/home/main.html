@@ -1,7 +1,27 @@
 {% extends "base_bootstrap.html" %}
 {% block content %}
     <h1>Welcome to {{ settings.APP_NAME }}</h1>
-    <p>
-    Hello world.
-    </p>
+    <h2>A few examples of Django applications:</h2>
+    <ul>
+        <li>
+            <p>
+                <a href="{% url 'ads:all' %}">Ads</a>
+            </p>
+        </li>
+        <li>
+            <p>
+                <a href="{% url 'autos:all' %}">Autos</a>
+            </p>
+        </li>
+        <li>
+            <p>
+                <a href="{% url 'cats:all' %}">Cats</a>
+            </p>
+        </li>
+        <li>
+            <p>
+                <a href="{% url 'polls:index' %}">Polls</a>
+            </p>
+        </li>
+    </ul>
 {% endblock content %}

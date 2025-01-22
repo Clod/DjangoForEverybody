@@ -22,13 +22,18 @@ from django.views.static import serve
 from django.views.generic import TemplateView
 
 urlpatterns = [
-    path('', include('home.urls')),  # Change to ads.urls
-    path('admin/', admin.site.urls),  # Keep
+    # The line below defines the default page for the site
+    # The exact page is defined in the home app in mysite/home/urls.py
+    path('', include('home.urls')),  
+    path('admin/', admin.site.urls),  
     path('accounts/', include('django.contrib.auth.urls')),  # Keep
     re_path(r'^oauth/', include('social_django.urls', namespace='social')),  # Keep
 
     path('ads/', include('ads.urls')),
-
+    path('autos/', include('autos.urls')),    
+    path('cats/', include('cats.urls')),
+    path('polls/', include('polls.urls')),
+    
     # Sample applications
     # path('hello/', include('hello.urls')),
     # path('users/', include('users.urls')),
