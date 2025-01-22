@@ -1,2 +1,2 @@
 # DjangoForEverybody
-Mitchigan University's Django for Everybody (Insanely commented LOL)
+Michigan University's Django for Everybody (Insanely commented LOL)
