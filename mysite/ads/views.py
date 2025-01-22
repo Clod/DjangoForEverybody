@@ -16,21 +16,17 @@ from django.contrib.humanize.templatetags.humanize import naturaltime
 from django.db.models import Q
 
 
+# class AdListViewT(OwnerListView):
+#     model = Ad
+
+# The Vanilla class above shows the template and polulates it with the data
+# but it only allows for a simple search. The class below allows for a more complex
+# and favouite handling, for example.
 class AdListView(OwnerListView):
     model = Ad
-    # By convention:
+    # By convention the template should be named as <model>_list.html
+    # and placed in the templates/<app_name> directory
     template_name = "ads/ad_list.html"
-
-    # def get(self, request) :
-    #     ad_list = Ad.objects.all()
-    #     favorites = list()
-    #     if request.user.is_authenticated:
-    #         # rows = [{'id': 2}, {'id': 4} ... ]  (A list of rows)
-    #         rows = request.user.favorite_ads.values('id')
-    #         # favorites = [2, 4, ...] using list comprehension
-    #         favorites = [ row['id'] for row in rows ]
-    #     ctx = {'ad_list' : ad_list, 'favorites': favorites}
-    #     return render(request, self.template_name, ctx)
     
     def get(self, request) :
         strval =  request.GET.get("search", False)

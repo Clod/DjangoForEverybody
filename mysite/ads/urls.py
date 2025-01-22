@@ -3,9 +3,14 @@ from . import views
 
 app_name='ads'
 urlpatterns = [
+    # http://127.0.0.1:8000/ads
+    # Shows the list of ads (see class AdListView in ads/views.py)
     path('', views.AdListView.as_view(), name='all'),
+    # http://127.0.0.1:8000/ads/ad/1 (1 is the number of the ad)
+    # Shows the details of an ad (see class AdDetailView in ads/views.py)
     path('ad/<int:pk>', views.AdDetailView.as_view(), name='ad_detail'),
-    # routes to views.AdCreateView
+    # http://127.0.0.1:8000/ads/ad/create
+    # Creates a new ad
     path('ad/create',
         views.AdCreateView.as_view(success_url=reverse_lazy('ads:all')), name='ad_create'),
     path('ad/<int:pk>/update',

@@ -30,11 +30,34 @@ And to launch the server:
 Django administration console is at: [http://127.0.0.1:8000/admin](https://)
 
 
-Each app path mut be added to mysite/urls.py
+Apps are created with:
+
+% python manage.py startapp <app_name>  # <app_name> is the name of the app
 
 and the apps themselves to mysites/settings.py
 
+and the localization of the apps to mysite/urls.py
 
-Home screen is:
+In that file you will find:
+
+urlpatterns = [
+    # The line below defines the default page for the site
+    # The exact page is defined in the home app in mysite/home/urls.py
+    path('', include('home.urls')),  
+    . . . 
+]
+
+therefore, theHome screen is:
 
 mysite/home/templates/home/main.html
+
+as defined in the home app in mysite/home/urls.py:
+
+urlpatterns = [
+    # The page is defined in the home app in mysite/home/views.py
+    # by the HomeView class
+    path('', views.HomeView.as_view()),
+]
+
+
+Cadorna / V4ffancul0

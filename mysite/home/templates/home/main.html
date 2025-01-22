@@ -5,6 +5,10 @@
     <ul>
         <li>
             <p>
+                <!-- The URL tag is used to generate a URL for a given view -->
+                <!-- The URL tag takes the name of the view as an argument -->
+                <!-- The name of the view is defined in the urls.py file of the app -->
+                <!-- There you have: path('', views.AdListView.as_view(), name='all') -->
                 <a href="{% url 'ads:all' %}">Ads</a>
             </p>
         </li>
