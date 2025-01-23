@@ -67,3 +67,7 @@ urlpatterns = [
 
 
 Cadorna / V4ffancul0
+
+The login page is defined in the home app in mysite/home/templates/home/main.html
+
+mysite/home/templates/registration/login_social.html

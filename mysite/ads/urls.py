@@ -10,7 +10,7 @@ urlpatterns = [
     # Shows the details of an ad (see class AdDetailView in ads/views.py)
     path('ad/<int:pk>', views.AdDetailView.as_view(), name='ad_detail'),
     # http://127.0.0.1:8000/ads/ad/create
-    # Creates a new ad
+    # Creates a new ad and is handled by the class AdCreateView in ads/views.py
     path('ad/create',
         views.AdCreateView.as_view(success_url=reverse_lazy('ads:all')), name='ad_create'),
     path('ad/<int:pk>/update',

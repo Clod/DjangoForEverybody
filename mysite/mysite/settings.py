@@ -11,7 +11,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 APP_NAME = 'ClodList' 
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'g$iqqu&*mw4_sg3(#ld0sqaalxebel&168^yj%i&sgrw(fmn@w'
+SECRET_KEY = '*******************************************'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -29,13 +29,15 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.humanize',
 
-    # Extensions - installed with requirements.txt
+    # Extensions needed.
     'django_extensions',
     'crispy_forms',
     'crispy_bootstrap5',
     'rest_framework',
     'social_django',
     'taggit',
+    
+    # Home application (Sort of a launchpad and landing page)
     'home.apps.HomeConfig',
 
     # Applications
@@ -71,7 +73,11 @@ ROOT_URLCONF = 'mysite.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        # DIRS: This is an empty list, which means Django will not look 
+        # for templates in any specific directories outside of the app directories.
         'DIRS': [],
+        # APP_DIRS: This is set to True, which means Django will look for templates 
+        # in the templates directory of each installed app.
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -162,9 +168,15 @@ REST_FRAMEWORK = {
     )
 }
 
-# Configure the social login
+# Configure the social login if needed
+
+# Django's authentication views use a default template location for rendering the login 
+# page. By default, Django looks for templates in the registration directory within each 
+# app's templates directory. In this case, Django will look 
+# for the login template at home/templates/registration/login.html.
+
 try:
-    from . import github_settings
+    from . import github_settings           # mysite/mysite/github_settings.py
     SOCIAL_AUTH_GITHUB_KEY = github_settings.SOCIAL_AUTH_GITHUB_KEY
     SOCIAL_AUTH_GITHUB_SECRET = github_settings.SOCIAL_AUTH_GITHUB_SECRET
 except:
@@ -194,7 +206,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 # https://coderwall.com/p/uzhyca/quickly-setup-sql-query-logging-django
 # https://stackoverflow.com/questions/12027545/determine-if-django-is-running-under-the-development-server
 
-'''  # Leave off for now
+'''  
+# Leave off for now
 import sys
 if (len(sys.argv) >= 2 and sys.argv[1] == 'runserver'):
     print('Running locally')

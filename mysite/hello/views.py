@@ -14,7 +14,8 @@ def myview(request):
     # Render index.html
     return render(request, "hello/index.html")
 
-# :
+# Nice demonstration that you can use sessions to keep track of information
+# across requests and that you don't need a template to return a response.
 def sessfun(request):
     # Get the current value of 'num_visits' from the session.
     # If 'num_visits' doesn't exist in the session, default to 0.
@@ -35,7 +36,7 @@ def sessfun(request):
     # The message includes the current visit count.
     resp = HttpResponse('Refresh the page to see the view count = ' + str(num_visits) + ' times. And go back to 1 after 5 times.')
 
-    # Add a cookie for grading purposed.
+    # Add a cookie for demonstration purposes.
     resp.set_cookie('my_name_is_cookie', 'And this is my content', max_age=1000)
 
     # Return the HttpResponse object to the client.

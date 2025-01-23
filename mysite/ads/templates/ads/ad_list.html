@@ -15,7 +15,9 @@
       <a href="{% url 'ads:all' %}"><i class="fa fa-undo"></i></a>
     </form>
   </div>
-  <h1>Ads</h1>
+  <h1>Ads App Landing Page</h1>
+  <br />
+  <h2>All Ads</h2>
   <p>
     {% if ad_list %}
       <ul>
@@ -55,16 +57,26 @@
       <p>There are no ads in the database.</p>
     {% endif %}
   </p>
-  <p>
-    <!-- Link to add a new ad. Goes to the ad_create view defined in urls.py -->
-    <a href="{% url 'ads:ad_create' %}">Add an Ad</a> |
-    {% if user.is_authenticated %}
-      <a href="{% url 'logout' %}?next={% url 'ads:all' %}">Logout</a>
-    {% else %}
-      <a href="{% url 'login' %}?next={% url 'ads:all' %}">Login</a>
-    {% endif %}
-  </p>
-  <script>
+</br>
+<p>
+  <!-- Link to add a new ad. Goes to the ad_create view defined in urls.py -->
+  <a href="{% url 'ads:ad_create' %}">Add an Ad</a> &nbsp; &nbsp;   |  &nbsp; &nbsp;
+  {% if user.is_authenticated %}
+    <a href="{% url 'logout' %}?next={% url 'ads:all' %}">Logout</a>
+  {% else %}
+     <!-- Link to login. Takes us to the login view in django.contrib.auth with the parameter -->
+      <!-- 'next' set to the URL to return to after a successful login -->
+    <a href="{% url 'login' %}?next={% url 'ads:all' %}">Login</a>
+  {% endif %}
+</p>
+</br>
+</br>
+</br>
+<!-- Back to home -->
+<p>
+  <a href="{% url 'home:home' %}">Back to Main Page</a>
+</p>
+<script>
   function toggleInlineDisplay(star_id) {
     var elem = document.getElementById(star_id);
     if (window.getComputedStyle(elem).display == "inline") {
@@ -94,5 +106,5 @@
         alert('Url failed with ' + error + ' ' + url);
       });
   }
-  </script>
+</script>
 {% endblock %}

@@ -24,10 +24,19 @@ from django.views.generic import TemplateView
 urlpatterns = [
     # The line below defines the default page for the site
     # The exact page is defined in the home app in mysite/home/urls.py
-path('', include('home.urls', namespace='home')),
-    path('admin/', admin.site.urls),  
-    path('accounts/', include('django.contrib.auth.urls')),  # Keep
-    re_path(r'^oauth/', include('social_django.urls', namespace='social')),  # Keep
+    path('', include('home.urls', namespace='home')),
+    path('admin/', admin.site.urls), 
+    # This line includes the default authentication URLs provided by Django.
+    # i.e. templates/registration directories in each app (in this case, home/templates/registration) 
+    path('accounts/', include('django.contrib.auth.urls')), 
+    # This line includes URLs for social authentication provided by the 
+    # social_django package.
+    # The re_path function is used for regular expression-based URL patterns. 
+    # The pattern r'^oauth/' matches any URL that starts with 'oauth/'.
+    # The include function includes the URLs defined in social_django.urls.
+    # The namespace='social' parameter provides a namespace for these URLs, 
+    # which can be useful for reversing URL patterns.
+    re_path(r'^oauth/', include('social_django.urls', namespace='social')), 
 
     path('ads/', include('ads.urls')),
     path('autos/', include('autos.urls')),    
@@ -55,10 +64,13 @@ urlpatterns += [
     ),
 ]
 
-# Switch to social login if it is configured - Keep for later
+# Switch to social login if it is configured
+# in other words, if there is a file called github_settings.py
+# Otherwise, use the default login template
 try:
     from . import github_settings
     social_login = 'registration/login_social.html'
+    # Insert the social_login view at the beginning of the list of URL patterns
     urlpatterns.insert(0,
                        path('accounts/login/', auth_views.LoginView.as_view(template_name=social_login))
                        )

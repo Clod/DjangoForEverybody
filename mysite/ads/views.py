@@ -61,9 +61,12 @@ class AdListView(OwnerListView):
 
 class AdDetailView(OwnerDetailView):
     model = Ad
-    # By convention:
+    # By convention the template should be named as <model>_detail.html
+    # and placed in the templates/<app_name> directory of the app.
     template_name = "ads/ad_detail.html"
     def get(self, request, pk) :
+        # Get the ad object with the given primary key (pk)
+        # If the object does not exist, return a 404 error
         x = get_object_or_404(Ad, id=pk)
         comments = Comment.objects.filter(ad=x).order_by('-updated_at')
         comment_form = CommentForm()
