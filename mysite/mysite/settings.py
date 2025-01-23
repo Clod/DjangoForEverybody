@@ -1,5 +1,5 @@
 """
-Django settings.
+    Django settings.
 """
 
 import os
@@ -17,6 +17,9 @@ SECRET_KEY = '*******************************************'
 DEBUG = True
 
 ALLOWED_HOSTS = ['*']
+
+# Session cookie name
+SESSION_COOKIE_NAME = 'omg_a_cookie_session_id'
 
 # Application definition
 
@@ -49,9 +52,6 @@ INSTALLED_APPS = [
 
 ]
 
-# When we get to tagging
-
-# When we get to crispy forms :)
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 CRISPY_TEMPLATE_PACK = "bootstrap5"
 
@@ -65,7 +65,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'social_django.middleware.SocialAuthExceptionMiddleware',   # Add
+    'social_django.middleware.SocialAuthExceptionMiddleware',  
 ]
 
 ROOT_URLCONF = 'mysite.urls'
@@ -93,9 +93,8 @@ TEMPLATES = [
     },
 ]
 
-# WSGI_APPLICATION = 'dj4e-samples.wsgi.application'
-WSGI_APPLICATION = 'mysite.wsgi.application'
 
+WSGI_APPLICATION = 'mysite.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
@@ -176,7 +175,8 @@ REST_FRAMEWORK = {
 # for the login template at home/templates/registration/login.html.
 
 try:
-    from . import github_settings           # mysite/mysite/github_settings.py
+    # mysite/mysite/github_settings.py
+    from . import github_settings           
     SOCIAL_AUTH_GITHUB_KEY = github_settings.SOCIAL_AUTH_GITHUB_KEY
     SOCIAL_AUTH_GITHUB_SECRET = github_settings.SOCIAL_AUTH_GITHUB_SECRET
 except:
