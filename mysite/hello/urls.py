@@ -4,20 +4,8 @@ from . import views
 
 app_name = "hello"
 
-'''
 urlpatterns = [
-    # ex: /polls/
-    path("", views.index, name="index"),
-    path('owner', views.owner, name='owner'),
-    # ex: /polls/5/
-    path("<int:question_id>/", views.detail, name="detail"),
-    # ex: /polls/5/results/
-    path("<int:question_id>/results/", views.results, name="results"),
-    # ex: /polls/5/vote/
-    path("<int:question_id>/vote/", views.vote, name="vote"),
-]
-'''
-urlpatterns = [
-    # path("", views.myview),
-    path("", views.sessfun),
+    # Absurdly long name, but it help undestand it is arbitrary
+    path("", views.myview, name='hello_app_home_page'),
+    path("fun/", views.sessfun, name='fun'),
 ]

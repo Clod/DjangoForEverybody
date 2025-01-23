@@ -4,10 +4,11 @@ Michigan University's Django for Everybody (Insanely commented LOL)
 
 SqLite3 superuser credencials are:
 
-```
-username: admin
-password: admin
-```
+
+**username:** admin
+
+**password:** admin
+
 
 Where did those come from?
 
@@ -29,7 +30,6 @@ And to launch the server:
 
 Django administration console is at: [http://127.0.0.1:8000/admin](https://)
 
-
 Apps are created with:
 
 % python manage.py startapp <app_name>  # <app_name> is the name of the app
@@ -40,12 +40,15 @@ and the localization of the apps to mysite/urls.py
 
 In that file you will find:
 
+```
 urlpatterns = [
     # The line below defines the default page for the site
     # The exact page is defined in the home app in mysite/home/urls.py
-    path('', include('home.urls')),  
-    . . . 
+    path('', include('home.urls')),
+    . . .
 ]
+```
+
 
 therefore, theHome screen is:
 
@@ -53,11 +56,14 @@ mysite/home/templates/home/main.html
 
 as defined in the home app in mysite/home/urls.py:
 
+
+```language
 urlpatterns = [
     # The page is defined in the home app in mysite/home/views.py
     # by the HomeView class
     path('', views.HomeView.as_view()),
 ]
+```
 
 
 Cadorna / V4ffancul0

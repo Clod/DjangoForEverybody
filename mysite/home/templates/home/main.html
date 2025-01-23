@@ -7,9 +7,19 @@
             <p>
                 <!-- The URL tag is used to generate a URL for a given view -->
                 <!-- The URL tag takes the name of the view as an argument -->
-                <!-- The name of the view is defined in the urls.py file of the app -->
+                <!-- The name of the view is defined in the ads/urls.py file of the app -->
                 <!-- There you have: path('', views.AdListView.as_view(), name='all') -->
                 <a href="{% url 'ads:all' %}">Ads</a>
+            </p>
+        </li>
+        <li>
+            <p>
+                <!-- The URL tag is used to generate a URL for a given view -->
+                <!-- The URL tag takes the name of the view as an argument -->
+                <!-- The name of the view is defined in the hello/urls.py file of the app -->
+                <!-- There you have: path('', views.HomeView.as_view(), name='hello_app_home_page') -->
+                <!-- Absurdly long name, but it help undestand it is arbitrary -->
+                <a href="{% url 'hello:hello_app_home_page' %}">Hello</a>
             </p>
         </li>
         <li>

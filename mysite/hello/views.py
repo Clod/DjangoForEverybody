@@ -14,7 +14,7 @@ def myview(request):
     # Render index.html
     return render(request, "hello/index.html")
 
-# Real stuff for the excercise:
+# :
 def sessfun(request):
     # Get the current value of 'num_visits' from the session.
     # If 'num_visits' doesn't exist in the session, default to 0.
@@ -33,10 +33,10 @@ def sessfun(request):
 
     # Create an HttpResponse object with a plain text message.
     # The message includes the current visit count.
-    resp = HttpResponse('view count=' + str(num_visits))
+    resp = HttpResponse('Refresh the page to see the view count = ' + str(num_visits) + ' times. And go back to 1 after 5 times.')
 
-    # Add a cookie for gradieng purposed.
-    resp.set_cookie('dj4e_cookie', 'd070c47f', max_age=1000)
+    # Add a cookie for grading purposed.
+    resp.set_cookie('my_name_is_cookie', 'And this is my content', max_age=1000)
 
     # Return the HttpResponse object to the client.
     # This sends the response back to the user's browser.

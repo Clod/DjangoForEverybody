@@ -24,7 +24,7 @@ from django.views.generic import TemplateView
 urlpatterns = [
     # The line below defines the default page for the site
     # The exact page is defined in the home app in mysite/home/urls.py
-    path('', include('home.urls')),  
+path('', include('home.urls', namespace='home')),
     path('admin/', admin.site.urls),  
     path('accounts/', include('django.contrib.auth.urls')),  # Keep
     re_path(r'^oauth/', include('social_django.urls', namespace='social')),  # Keep
@@ -33,35 +33,7 @@ urlpatterns = [
     path('autos/', include('autos.urls')),    
     path('cats/', include('cats.urls')),
     path('polls/', include('polls.urls')),
-    
-    # Sample applications
-    # path('hello/', include('hello.urls')),
-    # path('users/', include('users.urls')),
-    # path('tracks/', include('tracks.urls')),
-    # path('views/', include('views.urls')),
-    # path('route/', include('route.urls', namespace='nsroute')),
-    # path('tmpl/', include('tmpl.urls')),
-    # path('gview/', include('gview.urls')),
-    # path('session/', include('session.urls')),
-    # path('authz/', include('authz.urls')),
-    # path('getpost/', include('getpost.urls')),
-    # path('form/', include('form.urls')),
-    # path('crispy/', include('crispy.urls')),
-    # path('myarts/', include('myarts.urls')),
-    # path('menu/', include('menu.urls')),
-    # path('forums/', include('forums.urls')),
-    # path('pics/', include('pics.urls')),
-    # path('favs/', include('favs.urls')),
-    # path('favsql/', include('favsql.urls')),
-    # path('rest/', include('rest.urls')),
-    # path('autos/', include('autos.urls')),
-    # path('usermodel/', include('usermodel.urls')),
-    # path('fetch/', include('fetch.urls')),
-    # path('chat/', include('chat.urls')),
-    # path('util/', include('util.urls')),
-    # path('well/', include('well.urls')),
-    # path('tagme/', include('tagme.urls')),
-    # path('zip/', include('zip.urls')),
+    path('hello/', include('hello.urls')),
 ]
 
 # Serve the static HTML
