@@ -23,7 +23,9 @@ urlpatterns = [
     path('comment/<int:pk>/delete',
         views.CommentDeleteView.as_view(success_url=reverse_lazy('ads:all')), name='ad_comment_delete'),
     path('ad/<int:pk>/favorite',
+    # url to call the AddFavoriteView class in views.py
     views.AddFavoriteView.as_view(), name='ad_favorite'),
+    # url to call the DeleteFavoriteView class in views.py
     path('ad/<int:pk>/unfavorite',
     views.DeleteFavoriteView.as_view(), name='ad_unfavorite'),
 ]

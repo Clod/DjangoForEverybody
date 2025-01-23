@@ -23,13 +23,25 @@
       <ul>
         {% for ad in ad_list %}
           <li>
-            <a href="{% url 'ads:ad_detail'  ad.id %}">{{ ad.title }}</a>
+            <a href="{% url 'ads:ad_detail' ad.id %}">{{ ad.title }}</a>
+            <!-- Check if the current user is the owner of this ad -->
             {% if ad.owner == user %}
-              (<a href="{% url 'ads:ad_update' ad.id %}">Edit</a> |
-              <a href="{% url 'ads:ad_delete' ad.id %}">Delete</a>)
+              (
+              <!-- If user is owner, show an Edit link that goes to the ad_update view with this ad's ID -->
+              <a href="{% url 'ads:ad_update' ad.id %}">Edit</a> |
+              <!-- Also show a Delete link that goes to the ad_delete view with this ad's ID -->
+              <a href="{% url 'ads:ad_delete' ad.id %}">Delete</a>
+              )
             {% endif %}
+            <!-- If the user is authenticated, show the favorite/unfavorite stars -->
+            <!-- The two hrefs are stacked on top of each other, with one showing and one hidden -->
+            <!-- The JavaScript function favPost() is called when the user clicks on one of the hrefs -->
+            <!-- The function takes two arguments: the URL to call, and the ad ID -->
             {% if user.is_authenticated %}
               <!-- Two hrefs with two stacked icons each - one showing and one hidden -->
+              <!-- The first href -->
+              <!-- Displayed if the ad is an owner's favorite. If clicked, it will call the ad_unfavorite view -->
+              <!-- As usual, urls are defined in urls.py and views are defined in views.py -->
               <a href="#"
                  onclick="favPost('{% url 'ads:ad_unfavorite' ad.id %}', {{ ad.id }} );return false;"
                  {% if ad.id not in favorites %}style="display: none;"{% endif %}
@@ -77,32 +89,58 @@
   <a href="{% url 'home:home' %}">Back to Main Page</a>
 </p>
 <script>
+  // Function to toggle the display of favorite/unfavorite stars
+  // Takes the ID of the star element as a parameter
   function toggleInlineDisplay(star_id) {
+    // Get the star element by its ID
     var elem = document.getElementById(star_id);
+
+    // If the element is currently displayed inline
     if (window.getComputedStyle(elem).display == "inline") {
+      // Hide it and store that it was previously inline
       elem.style.display = 'none';
       elem.dataset.previousDisplay = 'inline';
-    } else if (window.getComputedStyle(elem).display == "block") {
+    } 
+    // If the element is currently displayed as a block
+    else if (window.getComputedStyle(elem).display == "block") {
+      // Hide it and store that it was previously block
       elem.style.display = 'none';
       elem.dataset.previousDisplay = 'block';
-    } else {
+    }
+    // If the element is currently hidden
+    else {
+      // Log the previous display value for debugging
       console.log('prev', elem.dataset.previousDisplay);
+      // If we stored a previous display value
       if (typeof elem.dataset.previousDisplay == 'string') {
+        // Restore that previous display value
         elem.style.display = elem.dataset.previousDisplay
       } else {
+        // Default to inline display if no previous value
         elem.style.display = 'inline';
       }
     }
   }
 
+  // Function that handles favoriting/unfavoriting posts
+  // Takes a URL (favorite or unfavorite endpoint) and the ad's ID as parameters
   function favPost(url, ad_id) {
+    // Log the URL being called to the console for debugging
     console.log('POSTing to', url);
+    
+    // Make a POST request to the provided URL with an empty JSON body
     fetch(url, { method: 'POST', body: '{}' })
       .then((response) => {
+        // Log when the request is complete
         console.log(url, 'finished');
+        
+        // Toggle the visibility of both the favorite and unfavorite stars
+        // This switches which star icon is visible to the user
         toggleInlineDisplay("unfavorite_star_" + ad_id);
         toggleInlineDisplay("favorite_star_" + ad_id);
-      }).catch((error) => {
+      })
+      .catch((error) => {
+        // If the request fails, show an alert with the error message
         alert('Url failed with ' + error + ' ' + url);
       });
   }

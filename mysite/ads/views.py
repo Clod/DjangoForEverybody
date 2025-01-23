@@ -19,9 +19,18 @@ from django.db.models import Q
 # class AdListViewT(OwnerListView):
 #     model = Ad
 
+# Note 1:
 # The Vanilla class above shows the template and polulates it with the data
 # but it only allows for a simple search. The class below allows for a more complex
-# and favouite handling, for example.
+# search and favorites handling, for example.
+
+# Note 2:
+# The view defined by this class as currently defined does not require the user to be logged in.
+# Should you need it to require the user to be logged in, you could add an exta mixin to the class
+# like so:  
+#        class AdListView(LoginRequiredMixin, OwnerListView):
+# and the view will get automagically redirected to the login page if the user is not logged in.
+
 class AdListView(OwnerListView):
     model = Ad
     # By convention the template should be named as <model>_list.html
@@ -179,27 +188,47 @@ class CommentDeleteView(OwnerDeleteView):
         ad = self.object.ad
         return reverse('ads:ad_detail', args=[ad.id])
     
-    
+# This decorator combination serves two purposes:
+# 1. @method_decorator - Converts a function decorator (@csrf_exempt) to be usable on a class-based view
+# 2. csrf_exempt - Disables Django's CSRF protection for this view
+#    - CSRF (Cross-Site Request Forgery) protection is normally required for POST requests
+#    - We disable it here because this view might be called from JavaScript/AJAX requests
+#    - name='dispatch' indicates that the decorator should be applied to the dispatch() method    
 @method_decorator(csrf_exempt, name='dispatch')
 class AddFavoriteView(LoginRequiredMixin, View):
     def post(self, request, pk) :
         print("Add PK",pk)
+        # Get the Ad object with the specified primary key, or return 404 if not found
         t = get_object_or_404(Ad, id=pk)
+        # Create a new Favorite (Fav) object linking the current user and the ad
         fav = Fav(user=request.user, ad=t)
         try:
+            # Attempt to save the favorite to the database
+            # The save() operation might fail if this combination of user and ad already exists
             fav.save()  # In case of duplicate key
         except IntegrityError:
+            # If a duplicate key error occurs (user has already favorited this ad)
+            # silently ignore the error and continue
             pass
+        # Return an empty HTTP response to indicate the operation completed
         return HttpResponse()
+
 
 @method_decorator(csrf_exempt, name='dispatch')
 class DeleteFavoriteView(LoginRequiredMixin, View):
     def post(self, request, pk) :
-        print("Delete PK",pk)
+        print("Delete PK",pk) 
+        # Get the Ad object with the specified primary key, or return 404 if not found
         t = get_object_or_404(Ad, id=pk)
+        
         try:
+            # Attempt to find and delete the Favorite entry that matches both the current user and ad
+            # If found, the .delete() method will remove it from the database
             Fav.objects.get(user=request.user, ad=t).delete()
         except Fav.DoesNotExist:
+            # If no matching Favorite entry exists, silently ignore the error
+            # This prevents errors when trying to delete a non-existent favorite
             pass
 
+        # Return an empty HTTP response to indicate the operation completed
         return HttpResponse()
