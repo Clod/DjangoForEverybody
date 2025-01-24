@@ -1,6 +1,10 @@
 # **DjangoForEverybody**
 
-Michigan University's Django for Everybody (Insanely commented LOL)
+**IMPORTANT**:
+All the code belongs to:
+Michigan University's Django for Everybody https://online.umich.edu/series/python-for-everybody/
+by Dr. Charles Severance
+I just added an insane ammount of comments for me to understand each and every detail of what's going on in there, and I made some extremely minor changes to the code (added a few links here and there to make navigarion between apps more easy).
 
 SqLite3 superuser credencials are:
 
@@ -13,19 +17,31 @@ Easy:
 
 After creating the migrations (to create the necessary files in the database) do:
 
+
+```language
 % python manage.py createsuperuser
+```
+
 
 And to launch the server:
 
-% python manage.py runserver                 \# Default localhost:8000  
-% python manage.py runserver 8080            \# Custom port  
-% python manage.py runserver 0.0.0.0:8000    \# Allow external access
+
+```language
+% python manage.py runserver                 # Default localhost:8000  
+% python manage.py runserver 8080            # Custom port  
+% python manage.py runserver 0.0.0.0:8000    # Allow external access
+```
+
 
 Django administration console is at: http://127.0.0.1:8000/admin
 
 Apps are created with:
 
-% python manage.py startapp                  \# is the name of the app
+
+```language
+% python manage.py startapp                 # is the name of the app
+
+```
 
 add the apps themselves to mysites/settings.py
 
@@ -33,12 +49,16 @@ add the localization of the apps to mysite/urls.py
 
 In that file you will find:
 
-urlpatterns \= \[  
-    \# The line below defines the default page for the site  
-    \# The exact page is defined in the home app in mysite/home/urls.py  
+
+```language
+urlpatterns = [  
+    # The line below defines the default page for the site  
+    # The exact page is defined in the home app in mysite/home/urls.py  
     path('', include('home.urls')),  
     . . .  
-\]
+]
+```
+
 
 therefore, the Home screen is:
 
@@ -46,13 +66,14 @@ mysite/home/templates/home/main.html
 
 as defined in the home app in mysite/home/urls.py:
 
-urlpatterns \= \[  
-    \# The page is defined in the home app in mysite/home/views.py  
-    \# by the HomeView class  
-    path('', views.HomeView.as\_view()),  
-\]
 
-Cadorna / V4ffancul0
+```language
+urlpatterns = [  
+    # The page is defined in the home app in mysite/home/views.py  
+    # by the HomeView class  
+    path('', views.HomeView.as_view()),  
+]
+```
 
 The login page is defined in the home app in mysite/home/templates/home/main.html
 
@@ -70,12 +91,20 @@ Authentication:
 
 In file:
 
-mysite/mysite/github\_settings.py
+
+```language
+mysite/mysite/github\settings.py
+```
+
 
 you need to add the credentials provided by GitHub
 
-SOCIAL\_AUTH\_GITHUB\_KEY \= 'xxxxxxxxxxxxxxxxxxxx'  
-SOCIAL\_AUTH\_GITHUB\_SECRET \= 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
+
+```language
+SOCIAL_AUTH_GITHUB_KEY = 'xxxxxxxxxxxxxxxxxxxx'  
+SOCIAL_AUTH_GITHUB_SECRET = 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
+```
+
 
 # Cross-Site Request Forgery
 
@@ -109,7 +138,9 @@ In these examples:
 
 Django includes middleware to handle CSRF protection. By default, Django's CsrfViewMiddleware is included in the `MIDDLEWARE` setting in settings.py:
 
-MIDDLEWARE \= \[  
+
+```language
+MIDDLEWARE = [  
     'django.middleware.security.SecurityMiddleware',  
     'django.contrib.sessions.middleware.SessionMiddleware',  
     'django.middleware.common.CommonMiddleware',  
@@ -117,21 +148,27 @@ MIDDLEWARE \= \[
     'django.contrib.auth.middleware.AuthenticationMiddleware',  
     'django.contrib.messages.middleware.MessageMiddleware',  
     'django.middleware.clickjacking.XFrameOptionsMiddleware',  
-    'social\_django.middleware.SocialAuthExceptionMiddleware',    
-\]
+    'social_django.middleware.SocialAuthExceptionMiddleware',    
+]
+
+```
 
 ### **CSRF Exemptions**
 
 In some cases as in **`class AddFavoriteView(LoginRequiredMixin, View)`**you might need to exempt certain views from CSRF protection. This can be done using the `csrf_exempt` decorator:
 
-from django.views.decorators.csrf import csrf\_exempt  
+
+```language
+from django.views.decorators.csrf import csrf_exempt  
 from django.http import JsonResponse
 
-@method\_decorator(csrf\_exempt, name='dispatch')  
+@method_decorator(csrf_exempt, name='dispatch')  
 class AddFavoriteView(LoginRequiredMixin, View):  
     def post(self, request, pk) :  
          .  .  .  
         return HttpResponse()
+
+```
 
 CSRF protection is a critical security measure in web applications to prevent unauthorized commands from being transmitted from a user that the web application trusts. In Django, CSRF tokens are automatically included in forms and validated by middleware to ensure the integrity and security of form submissions.
 
@@ -144,16 +181,22 @@ And if we check the database:
 sqlite\> select \* from django\_session;  
 ab3vmfgsli92rlccmzv3meq09ujr3t08|.eJxVjEsOwjAMBe-SNYpM4jgpS\_Y9Q-U6DimgVupnhbg7VOoCtm9m3st0vK212xaduyGbi0Fz-t16loeOO8h3Hm-TlWlc56G3u2IPuth2yvq8Hu7fQeWlfmuHicj5SIDAAk4CqwaEhnwmIfBRCgMHFR8bVS0NF1F\_ThlRE4J5fwDI1DfS:1tYUpI:HvXXDJI46k\_yuwMpkFfsp51la5rCjkSJb4GfdvyQyms|2025-01-30 18:42:44.981297  
 7gtqc6bg0zm89qu86s7cvlmc2rxdi92g|eyJudW1fdmlzaXRzIjo0fQ:1tb13s:wYi7n8Rb5WMp-0C39pdktup3EdCT-Hrm27cpSahdzYs|2025-02-06 17:32:12.594429  
-**r7zku3uyal00yuqqu89jfg2nqfpfbhh6**|.eJxVjM1OhDAURt-lawP9AUrdDTGzm9EYFu7Ive2FIgQmtKiJ8d2FhA3b853z\_bKJfiJ7Zim4kLIn1vXRr9iECJE2\_H2t6-VrxOoi4wp3c3mn4W15qQf\_OuaPj3ErGlijb9ZAS9O7LRFnhmAHmvbBfcLUzYmdp7j0mOxKcqwhuc2OxupwTwcegt9qrXjWUlZak3MtHCitLM8FN1mBRmKrylKRcVqSxqKQUqNouVVgubBGYMb-\_gHngUyU:1tb6H5:5YGd8MUp10eNlino9Ja1lXpVoHuIXt5SzyKSprek2fY|2025-02-06 23:06:11.169973
+***r7zku3uyal00yuqqu89jfg2nqfpfbhh6***|.eJxVjM1OhDAURt-lawP9AUrdDTGzm9EYFu7Ive2FIgQmtKiJ8d2FhA3b853z\_bKJfiJ7Zim4kLIn1vXRr9iECJE2\_H2t6-VrxOoi4wp3c3mn4W15qQf\_OuaPj3ErGlijb9ZAS9O7LRFnhmAHmvbBfcLUzYmdp7j0mOxKcqwhuc2OxupwTwcegt9qrXjWUlZak3MtHCitLM8FN1mBRmKrylKRcVqSxqKQUqNouVVgubBGYMb-\_gHngUyU:1tb6H5:5YGd8MUp10eNlino9Ja1lXpVoHuIXt5SzyKSprek2fY|2025-02-06 23:06:11.169973
 
 We can identify the session id.
 
-The name of the session cookie con be configured in:
+The name of the session cookie can be configured in:
 
+
+```language
 mysite/mysite/settings.py
+```
 
-\# Session cookie name  
-SESSION\_COOKIE\_NAME \= 'omg\_a\_cookie\_session\_id'  
+```language
+# Session cookie name  
+SESSION_COOKIE_NAME = 'omg_a_cookie_session_id'  
+```
+
  
 
 ![image 2](./readme_images/image1.png)
@@ -179,11 +222,19 @@ To use a production server like Gunicorn, you would typically follow these steps
 
 **Install Gunicorn**:
 
+
+```language
   pip install gunicorn
+
+```
 
 **Run Gunicorn**:
 
-  gunicorn mysite.wsgi:application \--bind 0.0.0.0:8000
+
+```language
+  gunicorn mysite.wsgi:application --bind 0.0.0.0:8000
+
+```
 
 ### **Example Configuration for ASGI Server**
 
@@ -191,20 +242,29 @@ If you plan to use asynchronous views or middleware, you would need to configure
 
 **Install Uvicorn**:
 
+
+```language
   pip install uvicorn
+
+```
 
 **Configure ASGI Application**:  
 Add the `ASGI_APPLICATION` setting to `settings.py`:
 
-ASGI\_APPLICATION \= 'mysite.asgi.application'
+
+```language
+ASGI_APPLICATION = 'mysite.asgi.application'
+
+```
 
 **Run Uvicorn**:
 
-  uvicorn mysite.asgi:application \--host 0.0.0.0 \--port 8000
+
+```language
+  uvicorn mysite.asgi:application --host 0.0.0.0 --port 8000
+
+```
 
 ### **Conclusion**
 
 The web server in use for the Django project is likely the Django development server, which is suitable for development but not recommended for production. For production, a WSGI-compliant server like Gunicorn or an ASGI-compliant server like Uvicorn should be used.
-
-
-<img src="./readme_images/image1.png" alt="Alt text" width="300" height="200">
