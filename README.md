@@ -3,7 +3,9 @@
 **IMPORTANT**:
 All the code belongs to:
 Michigan University's Django for Everybody https://online.umich.edu/series/python-for-everybody/
-by Dr. Charles Severance
+by Dr. Charles Severance (thanks a lot, Doc!!!)
+
+
 I just added an insane ammount of comments for me to understand each and every detail of what's going on in there, and I made some extremely minor changes to the code (added a few links here and there to make navigarion between apps more easy).
 
 SqLite3 superuser credencials are:
@@ -124,10 +126,14 @@ In Django, the CSRF token is automatically included in forms rendered using Djan
 
 Both:
 
-* mysite/home/templates/registration/login\_social.html  
-* mysite/home/templates/registration/login.html
 
-use siad tag.
+```language
+* mysite/home/templates/registration/login_social.html  
+* mysite/home/templates/registration/login.html
+```
+
+
+use said tag.
 
 In these examples:
 
@@ -211,8 +217,12 @@ The web server in use for the Django project is not explicitly specified in the 
 1. **WSGI Application**: The `WSGI_APPLICATION` setting in `settings.py` is set to `'mysite.wsgi.application'`. This indicates that the project is configured to use WSGI, which is typically managed by a WSGI-compliant web server.  
 2. **Development Server**: The Django development server is a built-in server that comes with Django. It is typically used for development purposes and is started using the `runserver` command. For example:  
      
+
+```language
    python manage.py runserver  
      
+```
+
 3. **Production Server**: For production environments, a more robust WSGI server like Gunicorn, uWSGI, or another WSGI-compliant server is typically used. These servers are designed to handle multiple requests concurrently and are more suitable for production use.  
 4. **ASGI Application**: The `ASGI_APPLICATION` setting is not present in the provided `settings.py` file. If asynchronous views or middleware are used, this setting would need to be added to specify the ASGI application.
 
